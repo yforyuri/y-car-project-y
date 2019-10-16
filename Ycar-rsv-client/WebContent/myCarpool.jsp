@@ -32,8 +32,6 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 
-<link rel="stylesheet" href="/resources/demos/style.css">
-
 <style>
 body {
    background-color: #FFFEF4;
@@ -52,7 +50,7 @@ body {
 .boxes {
    text-align: center;
    margin: 0 auto;
-   width: 70%
+   width: 80%
 }
 .modal-body {
    text-align: left;
@@ -68,6 +66,25 @@ body {
 .rsv {
    text-align: left;
    color: black;
+}
+#prsv {
+   text-align: left;
+   color: black;
+   margin-bottom:10px;
+}
+#matchimg{
+	float: left;
+	width: 130px;
+	display:inline-block;
+}
+.fitem{
+	color:#999999;
+	font-size:15px;
+}
+#frdate{
+	float:right;
+	color:#999999;
+	font-size:10px;
 }
 </style>
 </head>
@@ -113,9 +130,10 @@ body {
 
 
       <script>
+      var p_idx = 11;
+      
       $(document).ready(function() {
-         confirmList();
-         waitingList();
+         
         
         //소켓 연결 
         var socket = io('http://localhost:3000');
@@ -134,11 +152,10 @@ body {
       });     
          
         
-      var p_idx = 11; //나중에 세션으로 받아서 넣어야함\
       });
       
       function confirmRsv(p_idx){
-         var p_idx=11; 
+    	  var p_idx = 11;
          $('#waitingList').css('display', 'none');
          $('#pastList').css('display', 'none');
          $('#confirmList').css('display', 'block');
@@ -150,15 +167,15 @@ body {
                for (var i = 0; i < data.length; i++) {
                   
                   html += '<div class="rsv">\n';
-                  html += '예약일자 '+ data[i].r_date + '<br>\n';
-                  html += '운전자 닉네임 ' + data[i].nickname + '<br>\n';
-                  html += '카풀일시 '+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
-                  html += '출발지 '+ data[i].d_startpoint + '<br>\n';
-                  html += '도착지 ' + data[i].d_endpoint + '<br>\n';
-                  html += '요금 '+ data[i].d_fee +'원 <br>\n';
-                  html += '<button id="delete" onclick="deleteRsv('+p_idx+',' + data[i].r_idx + ')" class="btn btn-primary">카풀취소</button>';
-                 html += '<input id="hiddenR_idx" type="hidden" value="'+data[i].r_idx+'">';
-                 html += '</div>' 
+                  html += '<img src="image/logo_yeoncha.png" id="matchimg">';
+                  html += '<span class="fitem">운전자</span>\t' + data[i].nickname + '<br>\n';
+                  html += '<span class="fitem">카풀일시</span>\t'+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
+                  html += '<span class="fitem">출발지</span>\t'+ data[i].d_startpoint + '<br>\n';
+                  html += '<span class="fitem">도착지</span>\t' + data[i].d_endpoint + '<br>\n';
+                  html += '<span class="fitem">요금</span>\t'+ data[i].d_fee +'원 <br>\n';
+                  html += '<span id="frdate">예약일자 '+ data[i].r_date + '</span><br>\n';
+                  html += '<button id="delete" onclick="deleteRsv('+p_idx+',' + data[i].r_idx + ')" class="btn btn-primary rsvsbtn">카풀취소</button>';
+                  html += '</div>' 
                }
                $('#confirmList').html(html);
             }
@@ -167,22 +184,23 @@ body {
       }
       
       function deleteRsv(p_idx, r_idx){
-    	  if (confirm('삭제하시겠습니까?')) {
+    	  if (confirm('취소하시겠습니까?')) {
     		  $.ajax({
     		  url : 'http://localhost:8080/reservation/mycarpool/'+p_idx+'/'+r_idx,
     		  type : 'DELETE',
     		  success : function(data) {
     			  if (data == 'success') {
-    			 /*  $('#deleteModal').modal('hide'); */
-    			  alert('삭제되었습니다!');
+    				  alert('취소되었습니다!');
+    			  }else{
+    				 alert('취소실패ㅠ');
     			  }
     			}
-    	  });
+    		  });
 			}
     	  }
       
       function waitingRsv(p_idx){
-         var p_idx=11;
+    	  var p_idx = 11;
          $('#confirmList').css('display', 'none');
          $('#pastList').css('display', 'none');
          $('#waitingList').css('display', 'block');
@@ -194,11 +212,12 @@ body {
                for (var i = 0; i < data.length; i++) {
                   
                   html += '<div class="rsv">\n';
-                  html += '예약요청일자 '+ data[i].r_date + '<br>\n';
-                  html += '카풀일시 '+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
-                  html += '출발지 '+ data[i].d_startpoint + '\t 도착지 \t ' + data[i].d_endpoint + '<br>\n';
-                  html += '요금 '+ data[i].d_fee +'원 <br>\n';
-                  html += '<button id="delete" onclick="deleteReq('+p_idx+',' + data[i].r_idx + ')" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">요청취소</button>';
+                  html += '<span class="fitem">카풀일시</span>\t'+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
+                  html += '<span class="fitem">출발지</span>\t'+ data[i].d_startpoint + '<br>\n';
+                  html += '<span class="fitem">도착지 </span>\t ' + data[i].d_endpoint + '<br>\n';
+                  html += '<span class="fitem">요금</span>\t'+ data[i].d_fee +'원 <br>\n';
+                  html += '<span id="frdate">예약요청일자 '+ data[i].r_date + '</span><br>\n';
+                  html += '<button id="delete" onclick="deleteReq('+p_idx+',' + data[i].r_idx + ')" class="btn btn-primary rsvsbtn">요청취소</button>';
                   html += '</div>' 
                }
                $('#waitingList').html(html);
@@ -222,7 +241,7 @@ body {
     	 }
       
       function pastRsv(){
-         var p_idx = 11; 
+    	  var p_idx = 11;
          $('#waitingList').css('display', 'none');
          $('#confirmList').css('display', 'none');
          $('#pastList').css('display', 'block');
@@ -233,17 +252,17 @@ body {
                var html = '';
                for (var i = 0; i < data.length; i++) {
                   
-                  html += '<div class="rsv">\n';
-                  html += '카풀일시 '+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
-                  html += '출발지 '+ data[i].d_startpoint + '<br>\n';
-                  html += '도착지 '+ data[i].d_endpoint + '<br>\n';
-                  html += '요금 '+ data[i].d_fee +'원 <br>\n';
+                  html += '<div id="prsv">\n';
+                  html += '<span class="fitem">카풀일시</span>\t'+ data[i].d_date + '\t' + data[i].d_starttime + '\t -\t ' + data[i].d_endtime + '<br>\n';
+                  html += '<span class="fitem">출도착지</span>\t' + data[i].d_startpoint + '\t <span class="fitem"> ~ </span>' + data[i].d_endpoint + '<br>\n';
+                  html += '<span class="fitem">요금</span>\t'+ data[i].d_fee +'<span class="fitem">원 </span><br>\n';
                   html += '</div>' 
                }
                $('#pastList').html(html);
             }
          });
       }
+      
       </script>
    <script src="js/jquery.min.js"></script>
    <script src="js/jquery-migrate-3.0.1.min.js"></script>
