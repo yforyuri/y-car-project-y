@@ -116,7 +116,7 @@ public class ReservationService {
 			String htmlMsg = "<h2>고객님의 예약이 탑승자님의 사정으로 취소되었습니다.  </h2>";
 			
 			htmlMsg += "<h3>취소된 예약은 자동으로 연차 카풀 대기 목록에 노출됩니다</h3>";
-			htmlMsg += "<h3><a href=#>연차로 이동</a></h3>"; //나의카풀 페이지 주소 넣기 메일 페이지 양식 다시 만들자 
+			htmlMsg += "<h3><a href=#>연차로 이동</a></h3>";
 
 			message.setText(htmlMsg, "UTF-8", "html");
 			message.setFrom(new InternetAddress("Ycar.official@gmail.com"));

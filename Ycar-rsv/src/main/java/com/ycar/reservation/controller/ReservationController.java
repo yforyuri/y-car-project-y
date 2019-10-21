@@ -87,16 +87,6 @@ public class ReservationController {
 		return result > 0 ? "success" : "fail";		
 	}
 	
-//	//회원별 예약 리스트 대기예약과 확정/거절예약으로 리스트 분리
-//	@CrossOrigin
-//	@GetMapping("/reserve/{p_idx}")
-//	public List<Reservation> selectByPidx(@PathVariable("p_idx") int idx) {
-//
-//		List<Reservation> list = rsvService.getRsvList(idx);
-//
-//		return list;
-//	}
-	
 	//나의카풀 페이지에 출력될 예약 확정 리스트
 	@CrossOrigin
 	@GetMapping("/mycarpool/{p_idx}")
@@ -141,16 +131,17 @@ public class ReservationController {
 	@CrossOrigin
 	@DeleteMapping("/waitcarpool/{p_idx}/{r_idx}")
 	public String wdelete(@PathVariable("p_idx") int p_idx, @PathVariable("r_idx") int r_idx) {
-		
+//		
 //		String Demail = rsvService.getDemail(dr_idx);
 //		
-//		rsvService.send(Demail);
+//		rsvService.cancelSend(Demail);
 		
 		int result = rsvService.delete(p_idx, r_idx);
 		
 		return result > 0 ?"success":"fail";
 	}
 	
+	//passenger driving page lon lat 정보 불러오기
 	@CrossOrigin
 	@GetMapping("/lonlat/{r_idx}")
 	public lonlat selectLonlat(

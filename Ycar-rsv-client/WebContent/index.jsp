@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>YCAR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <!-- datepicker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -13,10 +15,11 @@
 <!-- bootstrap -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animate.css">
 <!-- font -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+
 <style>
 body {
 	background-color: #FFFEF4;
@@ -61,7 +64,7 @@ body {
 
 .rsvsbtn {
 	display: inline-block !important;
-	width: 200px !important;
+	width: 217px !important;
 	height: 40px;
 }
 
@@ -74,17 +77,19 @@ body {
 }
 .listed{
 	text-align: center;
+	margin-bottom:100px;
 }
 #match {
 	color:black;
 	text-align: left;
-	margin-left:30px;
+	margin: 30px 0 0 15px;
+	background-color: #FEFFFB;
 }
 #matchimg{
 	float: left;
 	width: 130px;
 	display:inline-block;
-	margin-right:50px;
+	margin: 0 30px 0 30px;
 }
 
 #fdate{
@@ -220,58 +225,29 @@ body {
 </div>
 
 
-<!-- 카풀 경로 모달 --> 
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="selectModalLabel">선택하신 카풀의 경로입니다.</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <div id="mmap_div"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary rsvsbtn" data-dismiss="modal">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
 var p_idx = $('#p_idx').val();
 
-    //datepicker 설정
-    $(function() {
-  	  $( ".datepicker" ).datepicker({
+//datepicker 설정
+$(function() {
+	$( ".datepicker" ).datepicker({
   		  dateFormat: 'yy-mm-dd'
   		  });
-  	  });
-    
-	$(document).ready(function() {
-        initTmap(); //티맵 지도 보여주기
-		/* searchCarpoolList(); //검색 조건에 맞는 카풀 리스트 */
-		viewRoute();
-	
-		
-	
-		$('#selectModal').on('hide.bs.modal', function (e) {
-		      $(this).find('.modal-body form')[0].reset(); 
-		         //폼 초기화 : 이후 다시 열어도 폼이 비워져 있도록!
-		   });
-		$('#viewModal').on('hide.bs.modal', function (e) {
-		     
-		        
-		   });
-		
 	});
+    
+$(document).ready(function() {
+	initTmap(); //티맵 지도 보여주기
+	
+	
+	$('#selectModal').on('hide.bs.modal', function (e) {
+		$(this).find('.modal-body form')[0].reset(); 
+		//폼 초기화 
+		});		
+});
 	
 	
 	
-	function search(p_idx){
-		
+function search(){
 		$.ajax({
 			url : 'http://localhost:8080/reservation/searchcarpool',
 			type : 'GET',
@@ -294,7 +270,7 @@ var p_idx = $('#p_idx').val();
 						html += '<span class="fitem">출발</span>\t' + data[i].d_startpoint + '<br>\n';
 						html += '<span class="fitem">도착</span>\t' + data[i].d_endpoint + '<br>\n';
 						html += '<span class="fitem">요금</span>\t'+ data[i].d_fee +'원 <br>';
-						html += '<button id="view" onclick="viewRoute('+ data[i].d_startlon + ', ' + data[i].d_startlat + ', ' + data[i].d_endlon + ', ' + data[i].d_endlat + ')" class="btn btn-primary rsvsbtn" data-toggle="modal" data-target="#viewModal">경로보기</button>\t';
+						html += '<button id="view" onclick="viewRoute('+ data[i].d_startlon + ', ' + data[i].d_startlat + ', ' + data[i].d_endlon + ', ' + data[i].d_endlat + ')" class="btn btn-primary rsvsbtn">경로보기</button>\t';
 						html += '<button id="select" onclick="selectCarpool(' + data[i].dr_idx + ')" class="btn btn-primary rsvsbtn" data-toggle="modal" data-target="#selectModal">예약하기</button>';
 						html += '</div>';
 					}
@@ -332,6 +308,7 @@ var p_idx = $('#p_idx').val();
     			  $('#selectModal').modal('hide');
     			  alert('카풀 예약 요청이 운전자님께 전달되었습니다!\n운전자님의 예약 요청 수락/거절 여부는 이메일로 받으실 수 있습니다.');
     			  $('#searchCarpoolList').css('display', 'none');
+    			  $('#searchForm')[0].reset();
 				}
 			});
       }
@@ -649,19 +626,9 @@ var p_idx = $('#p_idx').val();
           }
           
           
-          /* -------------------------------카풀리스트 tmap------------------------------- */
+          /* -------------------------------검색한 경로 보여주기 tmap------------------------------- */
           function viewRoute(d_startlon, d_startlat, d_endlon, d_endlat) {
 
-
-              var mmap;
-              // 페이지가 로딩이 된 후 호출하는 함수입니다.
-              // map 생성
-              // Tmap.map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-              mmap = new Tmap.Map({
-                  div: 'mmap_div',
-                  width: '460px',
-                  height: '450px'
-              });
               var tData = new Tmap.TData(); //REST API 에서 제공되는 경로, 교통정보, POI 데이터를 쉽게 처리할 수 있는 클래스입니다.
               var s_lonLat = new Tmap.LonLat(d_startlon, d_startlat); //시작 좌표입니다.   
               var e_lonLat = new Tmap.LonLat(d_endlon, d_endlat); //도착 좌표입니다.
@@ -672,10 +639,8 @@ var p_idx = $('#p_idx').val();
               tData.getRoutePlan(s_lonLat, e_lonLat, optionObj); //경로 탐색 데이터를 콜백 함수를 통해 XML로 리턴합니다.
               tData.events.register("onComplete", tData, onComplete); //데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트를 등록합니다.
               tData.events.register("onPrnError", tData, onError); //데이터 로드가 실패했을 떄 발생하는 이벤트를 등록합니다.
-              /*$('#map_div').append(map);*/
               //데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트 함수 입니다. 
               function onComplete() {
-                  console.log(this.responseXML); //xml로 데이터를 받은 정보들을 콘솔창에서 확인할 수 있습니다.
                   var kmlForm = new Tmap.Format.KML({
                       extractStyles: true
                   }).read(this.responseXML);
@@ -694,6 +659,6 @@ var p_idx = $('#p_idx').val();
                   alert("오류가 발생했습니다. 죄송합니다.");
               }
           }
-      </script>
+</script>
 </body>
 </html>

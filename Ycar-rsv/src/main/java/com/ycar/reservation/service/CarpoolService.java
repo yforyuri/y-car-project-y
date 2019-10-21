@@ -18,7 +18,7 @@ public class CarpoolService {
 	@Inject
 	private SqlSessionTemplate template;
 	
-	//전체카풀 출력하기~ 
+	//전체카풀 출력하기
 	public List<Carpool> getAllList(){
 		
 		dao = template.getMapper(ReservationDao.class);
