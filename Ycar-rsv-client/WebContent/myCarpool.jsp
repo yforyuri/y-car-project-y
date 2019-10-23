@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>YCAR</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script> -->
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <!-- datepicker -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -15,10 +15,9 @@
 <script src="https://apis.openapi.sk.com/tmap/js?version=1&format=javascript&appKey=5beda631-7db0-4be9-b0bd-b6b5a7f41945"></script>
 <!-- bootstrap -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/animate.css">
-<script src="js/jquery.waypoints.min.js"></script>
+<link rel="stylesheet" href="<c:url value='css/bootstrap.min.css" type="text/css'/>">
+<link rel="stylesheet" href="<c:url value='css/style.css'/>">
+<link rel="stylesheet" href="<c:url value='css/animate.css'/>">
 <!-- font -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
@@ -190,6 +189,7 @@ function confirmRsv() {
 									+ data[i].d_fee + '원 <br>\n';
 				html += '<span id="frdate">예약일자 ' + data[i].r_date+ '</span><br>\n';
 				html += '<button id="view" onclick="viewRoute('+ data[i].d_startlon + ', ' + data[i].d_startlat + ', ' + data[i].d_endlon + ', ' + data[i].d_endlat + ')" class="btn btn-primary rsvsbtn" data-toggle="modal" data-target="#viewModal">경로보기</button>\t';
+				html += '\t<button class="btn btn-primary" onclick="drivingStart('+data[i].r_idx+')" >탑승대기</button>';
 				html += '<button id="delete" onclick="deleteRsv(' + p_idx + ',' + data[i].r_idx + ')" class="btn btn-primary rsvsbtn">카풀취소</button>';
 				html += '</div>'
 				}
@@ -234,6 +234,8 @@ function waitingRsv() {
 					html += '<span class="fitem">도착지 </span>\t ' + data[i].d_endpoint + '<br>\n';
 					html += '<span class="fitem">요금</span>\t' + data[i].d_fee + '원 <br>\n';
 					html += '<span id="frdate">예약요청일자 '+ data[i].r_date + '</span><br>\n';
+					html += '<button id="view" onclick="viewRoute('+ data[i].d_startlon + ', ' + data[i].d_startlat + ', ' + data[i].d_endlon + ', ' + data[i].d_endlat + ')" class="btn btn-primary rsvsbtn" data-toggle="modal" data-target="#viewModal">경로보기</button>\t';
+					html += '\t<button class="btn btn-primary rsvsbtn" onclick="drivingStart('+data[i].r_idx+')" >탑승대기</button>\t';
 					html += '<button id="delete" onclick="deleteReq('+ p_idx + ',' + data[i].r_idx + ')" class="btn btn-primary rsvsbtn">요청취소</button>';
 					html += '</div>'
 					}
@@ -334,11 +336,11 @@ function viewRoute(d_startlon, d_startlat, d_endlon, d_endlat) {
 		}
 	}
 </script>
-
-<script src="js/jquery.stellar.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>   
-<script src="js/aos.js"></script>   
-<script src="js/scrollax.min.js"></script>
-<script src="js/main.js"></script>
+<script src="<c:url value='js/jquery.waypoints.min.js'/>"></script>
+<script src="<c:url value='js/jquery.stellar.min.js'/>"></script>
+<script src="<c:url value='js/owl.carousel.min.js'/>"></script>   
+<script src="<c:url value='js/aos.js'/>"></script>   
+<script src="<c:url value='js/scrollax.min.js'/>"></script>
+<script src="<c:url value='js/main.js'/>"></script>
 </body>
 </html>
