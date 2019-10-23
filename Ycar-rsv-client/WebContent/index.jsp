@@ -189,7 +189,7 @@ body {
 	<br><br>
 	<div class="listed">
 		<div id="searchCarpoolList"></div>
-		<div id="noresult"></div>
+		
 	</div>
 
 </div>
@@ -225,6 +225,8 @@ body {
 </div>
 
 
+
+
 <script>
 var p_idx =11;
 
@@ -242,7 +244,8 @@ $(document).ready(function() {
 	$('#selectModal').on('hide.bs.modal', function (e) {
 		$(this).find('.modal-body form')[0].reset(); 
 		//폼 초기화 
-		});		
+	});	
+
 });
 	
 	
@@ -254,14 +257,9 @@ function search(p_idx){
 			data : $('#searchForm').serialize(), 
 			success : function(data) {
 				var html = '';
-				var output = '';
-				for (var i = 0; i < data.length; i++) {	
-					
-					if (data == null) {
+				if(data.length>0) {
+					for (var i = 0; i < data.length; i++) {
 						
-						output += '<h3>검색하신 조건으로 등록된 카풀이 없습니다</h3>';
-						
-					}else {
 						html += '<div id="match">';
 						html += '<img src="image/logo_yeoncha.png" id="matchimg">';
 						html += '<input type="hidden" id="'+ data[i].dr_idx + '"><input type="hidden" id="'+ data[i].d_idx + '">';
@@ -273,13 +271,16 @@ function search(p_idx){
 						html += '<button id="view" onclick="viewRoute('+ data[i].d_startlon + ', ' + data[i].d_startlat + ', ' + data[i].d_endlon + ', ' + data[i].d_endlat + ')" class="btn btn-primary rsvsbtn">경로보기</button>\t';
 						html += '<button id="select" onclick="selectCarpool(' + data[i].dr_idx + ')" class="btn btn-primary rsvsbtn" data-toggle="modal" data-target="#selectModal">예약하기</button>';
 						html += '</div>';
-					}
+						} 
+				}else{
+					html += '<h4>검색하신 조건으로 등록된 카풀이 없습니다.</h4><br>\n';
+					html += '<h4>다시 검색해주세요!</h4><br>\n';
 				}
-				$('#noresult').html(output);
 				$('#searchCarpoolList').html(html);
 			}
 		});
 	}
+
 	
 	
 	function selectCarpool(dr_idx){
@@ -305,7 +306,7 @@ function search(p_idx){
     		  type : 'POST',
     		  data : $('#selectCp').serialize(),
     		  success : function(data) {
-    			  alert('카풀 예약 요청이 운전자님께 전달되었습니다!\n운전자님의 예약 요청 수락/거절 여부는 이메일로 받으실 수 있습니다.');
+    			  alert('카풀 예약 요청이 운전자님께 전달되었습니다!\n');
     			  $('#selectModal').modal('hide');
     			  $('#searchCarpoolList').css('display', 'none');
     			  $('#searchForm')[0].reset();
