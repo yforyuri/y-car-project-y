@@ -10,13 +10,15 @@
 
 
 
+
 # Team Ycar 
 
-강다은 @[iDaeun](https://github.com/iDaeun) - 탑승자 회원관리 <br>
-김나연 @[mand2](https://github.com/mand2) - 운전자 회원관리<br>
-노유리 @[yforyuri](https://github.com/yforyuri) - 탑승자 카풀 예약<br>
-손민희 @[Miniminis](https://github.com/Miniminis) - 운전자 탑승자 결제 후기<br>
-임욱표 @[dladnrvy](https://github.com/dladnrvy) - 운전자 카풀 등록<br>
+강다은 @[iDaeun](https://github.com/iDaeun) <br>
+김나연 @[mand2](https://github.com/mand2) <br>
+노유리 @[yforyuri](https://github.com/yforyuri)<br>
+손민희 @[Miniminis](https://github.com/Miniminis)<br>
+임욱표 @[dladnrvy](https://github.com/dladnrvy)<br>
+
 
 
 
