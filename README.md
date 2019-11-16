@@ -2,7 +2,7 @@
 
 직장인을 위한 카풀 서비스, 연차 Ycar - 탑승자 카풀 예약
 
-[탑승자페이지](http://54.180.116.126:8080/passenger/)<br>
+[탑승자페이지](http://54.180.116.126:8080/passenger/)(현재 결제수단-토스와 채팅 서버 중지되어있습니다)<br>
 [운전자페이지](http://13.125.252.85:8080/driver/)<br>
 [기획서](https://github.com/mand2/y-car-project/blob/master/%EA%B8%B0%ED%9A%8D%EC%84%9C/%EA%B8%B0%ED%9A%8D%EC%84%9C%20ver.1.0.1.pdf)<br>
 [전체코드](https://github.com/mand2/y-car-project)<br>
